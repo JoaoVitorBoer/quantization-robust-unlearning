@@ -1,17 +1,3 @@
-## Catastrophic Failure of LLM Unlearning via Quantization [ICLR 25] [[paper]](https://openreview.net/forum?id=lHSeDYamnz&referrer=%5BAuthor%20Console%5D(%2Fgroup%3Fid%3DICLR.cc%2F2025%2FConference%2FAuthors%23your-submissions))
-
-If you find this repo to be useful, please consider cite our paper. Thank you.
-
-        @inproceedings{
-        zhang2025catastrophic,
-        title={Catastrophic Failure of {LLM} Unlearning via Quantization},
-        author={Zhiwei Zhang and Fali Wang and Xiaomin Li and Zongyu Wu and Xianfeng Tang and Hui Liu and Qi He and Wenpeng Yin and Suhang Wang},
-        booktitle={The Thirteenth International Conference on Learning Representations},
-        year={2025},
-        url={https://openreview.net/forum?id=lHSeDYamnz}
-        }
-
-
 ## 🛠️ Installation
 
 ### Conda Environment
@@ -110,7 +96,7 @@ python eval.py \
   --out_file "out.csv"
 ```
 
-## Acknowledgement
+<!-- ## Acknowledgement
 
-Our code is mainly built on [muse_bench](https://github.com/jaechan-repo/muse_bench). The evaluation code on task Gen, Tru, Fac and Flu is based on [RWKU](https://github.com/jinzhuoran/RWKU). We appreciate their open-source code.
+Our code is mainly built on [muse_bench](https://github.com/jaechan-repo/muse_bench). The evaluation code on task Gen, Tru, Fac and Flu is based on [RWKU](https://github.com/jinzhuoran/RWKU). We appreciate their open-source code. -->
 
