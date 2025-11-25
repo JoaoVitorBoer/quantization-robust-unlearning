@@ -79,6 +79,7 @@ def unlearn(
         per_device_train_batch_size=per_device_batch_size,
         learning_rate=learning_rate,
         save_strategy="epoch",  # Save every epoch
+        save_total_limit=1,
         num_train_epochs=epochs,
         optim="adamw_torch",
         lr_scheduler_type="constant",
