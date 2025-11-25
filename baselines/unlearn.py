@@ -113,12 +113,6 @@ def get_args():
         "--alpha", type=int, default=10, help="weight for utility constraint"
     )
     parser.add_argument(
-        "--threshold",
-        type=int,
-        default=95,
-        help="threshold for SURE to filter salient modules",
-    )
-    parser.add_argument(
         "--lora_cfg",
         type=json.loads,
         default=None,
