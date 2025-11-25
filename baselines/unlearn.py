@@ -53,7 +53,6 @@ def main():
             tokenizer_dir=args.tokenizer_dir,
             resume_from_checkpoint=args.resume_from_checkpoint,
             alpha=args.alpha,
-            threshold=args.threshold,
             lora_cfg=args.lora_cfg,
         )
 
