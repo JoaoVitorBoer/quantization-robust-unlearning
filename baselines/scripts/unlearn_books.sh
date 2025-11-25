@@ -11,6 +11,7 @@ EPOCHS=1
 LR='1e-5'
 PER_DEVICE_BATCH_SIZE=1
 algos=("rmu")
+LORA_CFG='{"rank": 8, "alpha": 64, "dropout": 0.05, "target_modules": null}'
 
 for algo in "${algos[@]}"; do
     python unlearn.py \
@@ -20,5 +21,6 @@ for algo in "${algos[@]}"; do
         --out_dir "/data/zhiwei" \
         --max_len $MAX_LEN --epochs $EPOCHS --lr $LR \
         --alpha 1 --threshold 90 \
-        --per_device_batch_size $PER_DEVICE_BATCH_SIZE
+        --per_device_batch_size $PER_DEVICE_BATCH_SIZE \
+        --lora_cfg $LORA_CFG
 done
