@@ -29,6 +29,7 @@ LR='1e-5'
 PER_DEVICE_BATCH_SIZE=1
 algos=("npo_gdr" "npo_klr" "ga_gdr" "ga_klr" "ga" "npo")
 alphas=(300 2 100 2 1 1) # last two are for ga and npo but they are just placeholders and will not be used
+LORA_CFG='{"rank": 32, "alpha": 32, "dropout": 0.0, "target_modules": null}'
 
 for i in "${!algos[@]}"; do
     algo="${algos[$i]}"
@@ -42,5 +43,5 @@ for i in "${!algos[@]}"; do
         --max_len $MAX_LEN --epochs $EPOCHS --lr $LR \
         --alpha "$alpha" \
         --per_device_batch_size $PER_DEVICE_BATCH_SIZE \
-
+        --lora_cfg "$LORA_CFG"
 done
