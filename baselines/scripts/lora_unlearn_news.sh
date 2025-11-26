@@ -14,7 +14,7 @@
 
 cd /home/joaoabitante/quantization-robust-unlearning/baselines
 
-conda activate mu
+conda activate quant
 echo "Conda environment: $CONDA_DEFAULT_ENV"
 
 export CUDA_VISIBLE_DEVICES="0,1"

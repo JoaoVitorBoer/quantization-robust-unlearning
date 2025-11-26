@@ -13,6 +13,9 @@
 # `quantize_4bit=1, quantize_8bit=0` to test model in 4-bit. 
 # `quantize_4bit=0, quantize_8bit=1` to test model in 8-bit
 
+conda activate quant
+echo "Conda environment: $CONDA_DEFAULT_ENV"
+
 export CUDA_VISIBLE_DEVICES="0,1"
 algos=("ga_gdr" "npo_gdr" "npo_klr") 
 corpuss=("news")
