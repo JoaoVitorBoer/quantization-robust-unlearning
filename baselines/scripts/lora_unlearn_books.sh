@@ -25,13 +25,14 @@ TARGET_DIR='muse-bench/MUSE-Books_target'
 LLAMA_DIR='meta-llama/Llama-2-7b-hf'
 MAX_LEN=2048
 EPOCHS=5
-LR='1e-5'
+LR='1e-4'
 PER_DEVICE_BATCH_SIZE=1
 algos=("npo_gdr" "npo_klr" "ga_gdr" "ga_klr" "ga" "npo")
 alphas=(300 2 100 2 1 1) # last two are for ga and npo but they are just placeholders and will not be used
 LORA_CFG='{"rank": 32, "alpha": 32, "dropout": 0.0, "target_modules": null}'
 
 for i in "${!algos[@]}"; do
+    echo "===== Starting unlearning run: $algo epochs=$EPOCHS lr=$LR ====="
     algo="${algos[$i]}"
     alpha="${alphas[$i]}"
 
@@ -44,4 +45,5 @@ for i in "${!algos[@]}"; do
         --alpha "$alpha" \
         --per_device_batch_size $PER_DEVICE_BATCH_SIZE \
         --lora_cfg "$LORA_CFG"
+    echo "===== Finished unlearning run: $algo ====="
 done
