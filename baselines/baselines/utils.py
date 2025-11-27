@@ -9,7 +9,21 @@ from typing import *
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import json
 import re
+import numpy as np
+import random
 
+
+def set_seed(seed: int = 42):
+    """
+    Set random seed for Python, NumPy, PyTorch (CPU & CUDA),
+    plus enforce deterministic CuDNN.
+    """
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 def find_target_linear_modules(
     model: nn.Module, name_filters: Optional[List[str]] = None
@@ -202,3 +216,4 @@ def pad_or_trim_tensor(tensor, target_length, padding_value=0):
     else:
         # No change needed
         return tensor
+

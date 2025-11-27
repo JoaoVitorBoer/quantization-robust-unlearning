@@ -99,6 +99,10 @@ def unlearn(
     )
     model.config.use_cache = False  # silence the warnings.
     trainer.train(resume_from_checkpoint=resume_from_checkpoint)
+
+    if lora_cfg is not None:
+        model = model.merge_and_unload()
+        
     trainer.save_model(out_dir)
 
 

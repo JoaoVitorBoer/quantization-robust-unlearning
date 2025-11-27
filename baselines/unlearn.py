@@ -5,13 +5,14 @@ BASELINE_PATH = pathlib.Path(__file__).parent.resolve()
 sys.path.append(BASELINE_PATH)
 
 from baselines import it_unlearn, tv_unlearn, finetune
-
+from baselines.utils import set_seed
 import argparse
 from os.path import basename, dirname, join as pathjoin
 import json
 
 
 def main():
+    set_seed(42)
     args = get_args()
 
     if args.algo == "kn":
@@ -57,7 +58,6 @@ def main():
         )
 
     return
-
 
 def get_args():
     parser = argparse.ArgumentParser(description="Unlearning baselines")

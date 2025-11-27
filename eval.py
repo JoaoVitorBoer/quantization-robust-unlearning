@@ -12,6 +12,7 @@ from pandas import DataFrame
 import json
 from LLama_factory.src.llmtuner.eval import eval_mmlu, eval_truthfulqa, eval_triviaqa, eval_fluency
 from transformers import AutoTokenizer
+from baselines.baselines.utils import set_seed
 
 def eval_model(
     model: LlamaForCausalLM,
@@ -203,6 +204,7 @@ def load_then_eval_models(
 
 if __name__ == '__main__':
     import argparse
+    set_seed(42)
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_dirs', type=str, nargs='+', default=[])
     parser.add_argument('--names', type=str, nargs='+', default=[])
