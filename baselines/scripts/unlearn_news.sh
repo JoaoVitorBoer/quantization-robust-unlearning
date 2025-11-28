@@ -21,14 +21,14 @@ export CUDA_VISIBLE_DEVICES="0,1"
 CORPUS=('news')
 FORGET="../data/$CORPUS/raw/forget.txt"
 RETAIN="../data/$CORPUS/raw/retain1.txt"
-TARGET_DIR='muse-bench/MUSE-Books_target'
+TARGET_DIR='muse-bench/MUSE-News_target'
 LLAMA_DIR='meta-llama/Llama-2-7b-hf'
 MAX_LEN=2048
 EPOCHS=5
 LR='1e-5'
-PER_DEVICE_BATCH_SIZE=1
-#algos=("npo_gdr" "npo_klr" "ga_gdr" "ga" "ga_klr" "npo")
-algos=("ga")
+PER_DEVICE_BATCH_SIZE=2
+algos=("ga" "ga_gdr" "ga_klr" "npo" "npo_gdr" "npo_klr")
+
 
 for algo in "${algos[@]}"; do
     echo -e "===== Starting unlearning run: $algo epochs=$EPOCHS lr=$LR ===== \n"

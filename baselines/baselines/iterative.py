@@ -50,6 +50,7 @@ def unlearn(
     )
     
     if lora_cfg is not None:
+        print("Applying LoRA adapters...")
         target_modules = find_target_linear_modules(
             model, name_filters=lora_cfg.get("target_modules", None)
         )
@@ -101,6 +102,7 @@ def unlearn(
     trainer.train(resume_from_checkpoint=resume_from_checkpoint)
 
     if lora_cfg is not None:
+        print("Merging and unloading LoRA adapters...")
         model = model.merge_and_unload()
         
     trainer.save_model(out_dir)

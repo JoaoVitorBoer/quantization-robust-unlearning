@@ -26,14 +26,14 @@ LLAMA_DIR='meta-llama/Llama-2-7b-hf'
 MAX_LEN=2048
 EPOCHS=5
 LR='1e-5'
-PER_DEVICE_BATCH_SIZE=1
+PER_DEVICE_BATCH_SIZE=2
 algos=("npo_gdr" "npo_klr" "ga_gdr" "ga_klr" "ga" "npo")
 alphas=(300 2 100 2 1 1) # last two are for ga and npo but they are just placeholders and will not be used
 
 for i in "${!algos[@]}"; do
     algo="${algos[$i]}"
     alpha="${alphas[$i]}"
-
+    echo "===== Starting unlearning run: $algo epochs=$EPOCHS lr=$LR  ====="
     python unlearn.py \
         --algo $algo \
         --model_dir $TARGET_DIR --tokenizer_dir $LLAMA_DIR \
@@ -41,6 +41,6 @@ for i in "${!algos[@]}"; do
         --out_dir "./ckpt/$CORPUS/$algo" \
         --max_len $MAX_LEN --epochs $EPOCHS --lr $LR \
         --alpha "$alpha" \
-        --per_device_batch_size $PER_DEVICE_BATCH_SIZE \
-
+        --per_device_batch_size $PER_DEVICE_BATCH_SIZE
+    echo -e "\n===== Finished unlearning run: $algo ===== \n\n\n"
 done

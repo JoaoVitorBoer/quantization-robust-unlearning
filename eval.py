@@ -187,9 +187,9 @@ def load_then_eval_models(
     out = []
     for model_dir, name in zip(model_dirs, names):
         model = load_model(model_dir, name, args.quantize_4bit, args.quantize_8bit, args.alpha, corpus=corpus)
-        for name, param in model.named_parameters():
+        for p_name, param in model.named_parameters():
     # name will include the layer's name and the parameter's type (e.g., 'encoder.layer0.weight')
-            print(f"{name}: {param.dtype}")
+            print(f"{p_name}: {param.dtype}")
 
         tokenizer = load_tokenizer(tokenizer_dir)
         res = eval_model(

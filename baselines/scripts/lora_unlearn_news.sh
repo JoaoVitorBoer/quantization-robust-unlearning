@@ -21,17 +21,17 @@ export CUDA_VISIBLE_DEVICES="0,1"
 CORPUS=('news')
 FORGET="../data/$CORPUS/raw/forget.txt"
 RETAIN="../data/$CORPUS/raw/retain1.txt"
-TARGET_DIR='muse-bench/MUSE-Books_target'
+TARGET_DIR='muse-bench/MUSE-News_target'
 LLAMA_DIR='meta-llama/Llama-2-7b-hf'
 MAX_LEN=2048
 EPOCHS=5
 LR='1e-4'
-PER_DEVICE_BATCH_SIZE=1
-algos=("npo_gdr" "npo_klr" "ga_gdr" "ga" "ga_klr" "npo")
+PER_DEVICE_BATCH_SIZE=2
+algos=("ga" "ga_gdr" "ga_klr" "npo" "npo_gdr" "npo_klr")
 LORA_CFG='{"rank": 32, "alpha": 32, "dropout": 0.1, "target_modules": null}'
 
 for algo in "${algos[@]}"; do
-    echo "===== Starting unlearning run: $algo epochs=$EPOCHS lr=$LR ====="
+    echo "===== Starting unlearning run: $algo epochs=$EPOCHS lr=$LR lora_cfg=$LORA_CFG ====="
     python unlearn.py \
         --algo $algo \
         --model_dir $TARGET_DIR --tokenizer_dir $LLAMA_DIR \
