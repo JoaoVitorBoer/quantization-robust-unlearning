@@ -14,7 +14,7 @@ import json
 def main():
     set_seed(42)
     args = get_args()
-
+    print(args)
     if args.algo == "kn":
         raise NotImplementedError()
 
