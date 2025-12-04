@@ -30,6 +30,10 @@ PER_DEVICE_BATCH_SIZE=2
 algos=("ga" "ga_gdr" "ga_klr" "npo" "npo_gdr" "npo_klr")
 LORA_CFG='{"rank": 32, "alpha": 32, "dropout": 0.1, "target_modules": null}'
 
+# Optional first CLI argument: model_quant_config
+# If not provided, this will be empty and the flag won't be passed to Python
+model_quant_config="${1:-}"
+
 for algo in "${algos[@]}"; do
     echo "===== Starting unlearning run: $algo epochs=$EPOCHS lr=$LR lora_cfg=$LORA_CFG ====="
     python unlearn.py \
@@ -40,6 +44,7 @@ for algo in "${algos[@]}"; do
         --max_len $MAX_LEN --epochs $EPOCHS --lr $LR \
         --alpha 1 \
         --per_device_batch_size $PER_DEVICE_BATCH_SIZE \
-        --lora_cfg "$LORA_CFG"
+        --lora_cfg "$LORA_CFG" \
+        ${model_quant_config:+--model_quant_config "$model_quant_config"}
     echo "===== Finished unlearning run: $algo ====="
 done

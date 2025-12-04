@@ -31,6 +31,10 @@ algos=("npo_gdr" "npo_klr" "ga_gdr" "ga_klr" "ga" "npo")
 alphas=(300 2 100 2 1 1) # last two are for ga and npo but they are just placeholders and will not be used
 LORA_CFG='{"rank": 32, "alpha": 32, "dropout": 0.1, "target_modules": null}'
 
+# Optional first CLI argument: model_quant_config
+# If not provided, this will be empty and the flag won't be passed to Python
+model_quant_config="${1:-}"
+
 for i in "${!algos[@]}"; do
     algo="${algos[$i]}"
     alpha="${alphas[$i]}"
@@ -44,6 +48,7 @@ for i in "${!algos[@]}"; do
         --max_len $MAX_LEN --epochs $EPOCHS --lr $LR \
         --alpha "$alpha" \
         --per_device_batch_size $PER_DEVICE_BATCH_SIZE \
-        --lora_cfg "$LORA_CFG"
+        --lora_cfg "$LORA_CFG" \
+        ${model_quant_config:+--model_quant_config "$model_quant_config"}
     echo "===== Finished unlearning run: $algo ====="
 done

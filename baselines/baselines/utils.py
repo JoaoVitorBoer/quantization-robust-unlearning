@@ -11,8 +11,19 @@ import json
 import re
 import numpy as np
 import random
+from transformers import BitsAndBytesConfig
 
 
+def load_quantization_config(model_quant_config: str | None):
+    if model_quant_config == "qlora":
+        quantization_config = BitsAndBytesConfig(
+                load_in_4bit=True,
+                bnb_4bit_use_double_quant=True,
+                bnb_4bit_quant_type="nf4",
+                bnb_4bit_compute_type=torch.bfloat16,
+            )
+        return quantization_config
+   
 def set_seed(seed: int = 42):
     """
     Set random seed for Python, NumPy, PyTorch (CPU & CUDA),

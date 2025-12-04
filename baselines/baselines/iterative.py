@@ -1,4 +1,9 @@
-from .utils import load_model_and_tokenizer, load_model, find_target_linear_modules
+from .utils import (
+    load_model_and_tokenizer,
+    load_model,
+    find_target_linear_modules,
+    load_quantization_config,
+)
 from .dataset import ForgetRetainDataset
 
 import torch
@@ -7,7 +12,7 @@ from torch.cuda import device_count
 import transformers
 from transformers import Trainer, AutoModelForCausalLM
 import numpy as np
-from peft import LoraConfig, get_peft_model
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 
 
 # model_dir is the address of learned target model
@@ -28,13 +33,18 @@ def unlearn(
     resume_from_checkpoint: bool = False,
     alpha: float = 1.0,
     lora_cfg: dict | None = None,
+    model_quant_config: str | None = None,
 ):
     if "gd" in loss_type:
         assert (
             retain_data_file is not None
         ), "Retain data must be specified for grad_diff."
     # load target learned model, here the model is finetuned on Llama2, so we load its tokenizer
-    model, tokenizer = load_model_and_tokenizer(model_dir, tokenizer_dir=tokenizer_dir)
+    model, tokenizer = load_model_and_tokenizer(
+        model_dir,
+        tokenizer_dir=tokenizer_dir,
+        quantization_config=load_quantization_config(model_quant_config),
+    )
 
     dataset = ForgetRetainDataset(
         data_file,
@@ -48,8 +58,12 @@ def unlearn(
         if "npo" in loss_type or "kl" in loss_type or "rmu" in loss_type
         else None
     )
-    
+
     if lora_cfg is not None:
+        if model_quant_config == "qlora":
+            print("Preparing model for QLoRA training...")
+            model = prepare_model_for_kbit_training(model)
+
         print("Applying LoRA adapters...")
         target_modules = find_target_linear_modules(
             model, name_filters=lora_cfg.get("target_modules", None)
@@ -69,11 +83,9 @@ def unlearn(
         model = get_peft_model(model, lora_config)
         model.enable_input_require_grads()
         model.print_trainable_parameters()
-    
 
     if device_count() == 0:
         raise ValueError("Device not detected!")
-
 
     training_args = transformers.TrainingArguments(
         output_dir=out_dir,
@@ -104,7 +116,7 @@ def unlearn(
     if lora_cfg is not None:
         print("Merging and unloading LoRA adapters...")
         model = model.merge_and_unload()
-        
+
     trainer.save_model(out_dir)
 
 
