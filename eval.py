@@ -197,8 +197,10 @@ def load_then_eval_models(
             temp_dir=os.path.join(temp_dir, name)
         )
         out.append({'name': name} | res)
-        print(out)
-        if out_file is not None: write_csv(out, out_file)
+        print("\nCurrent evaluation results:")
+        print(DataFrame(out).to_string(index=False))
+        if out_file is not None:
+            write_csv(out, out_file)
     return DataFrame(out)
 
 
