@@ -59,6 +59,7 @@ def main():
             resume_from_checkpoint=args.resume_from_checkpoint,
             alpha=args.alpha,
             lora_cfg=args.lora_cfg,
+            model_quant_config=args.model_quant_config,
         )
 
     return
@@ -120,6 +121,12 @@ def get_args():
         type=json.loads,
         default=None,
         help="configuration for lora adapters in JSON format",
+    )
+    parser.add_argument(
+        "--model_quant_config",
+        type=str,
+        default=None,
+        help="Quantization config to use for model loading.",
     )
 
     args = parser.parse_args()
