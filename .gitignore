@@ -17,3 +17,6 @@ baselines/baselines/archive
 .venv/*
 uv.lock
 .python-version
+__pycache__/
+*.py[cod]
+

@@ -95,6 +95,7 @@ def load_model(
     model_name: str | None = None,
     quantization_config: any = None,
     reinforced_model_dir: str | None = None,
+    device_map: Optional[Union[str, Dict[str, int]]] = "auto",
 ) -> AutoModelForCausalLM:
     def extract_alpha(s):
         pattern = r"alpha=([+-]?\d*\.\d+|[+-]?\d+)"
@@ -135,7 +136,7 @@ def load_model(
         model_dir,
         quantization_config=quantization_config,
         torch_dtype=torch.bfloat16,
-        device_map="auto",
+        device_map=device_map,
     )
     return model
 
