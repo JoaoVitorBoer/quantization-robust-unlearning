@@ -1,3 +1,4 @@
+import os
 import sys
 import pathlib
 
@@ -9,7 +10,10 @@ from baselines.utils import set_seed
 import argparse
 from os.path import basename, dirname, join as pathjoin
 import json
+import torch
 
+print("CUDA_VISIBLE_DEVICES =", os.environ.get("CUDA_VISIBLE_DEVICES"))
+print("torch.cuda.device_count() =", torch.cuda.device_count())
 
 def main():
     set_seed(42)

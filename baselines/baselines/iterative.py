@@ -44,7 +44,7 @@ def unlearn(
     )
     # load reference model (learned model) for negative preference optimization and KL divergence constraints
     ref_model = (
-        load_model(model_dir, device_map={"": 1})
+        load_model(model_dir)
         if "npo" in loss_type or "kl" in loss_type or "rmu" in loss_type
         else None
     )
