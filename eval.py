@@ -183,6 +183,13 @@ def load_then_eval_models(
     if out_file is not None and not out_file.endswith('.csv'):
         raise ValueError(f"The file extension of `out_file` should be '.csv'.")
 
+    
+    quantization = (
+        "4bit" if bool(quantize_4bit)
+        else "8bit" if bool(quantize_8bit)
+        else "full-precision"
+    )
+
     # Run evaluation
     out = []
     for model_dir, name in zip(model_dirs, names):
@@ -196,7 +203,7 @@ def load_then_eval_models(
             model, tokenizer, metrics, corpus,
             temp_dir=os.path.join(temp_dir, name)
         )
-        out.append({'name': name} | res)
+        out.append({'name': name, 'quantization': quantization} | res)
         print("\nCurrent evaluation results:")
         print(DataFrame(out).to_string(index=False))
         if out_file is not None:
