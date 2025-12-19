@@ -25,11 +25,11 @@ TARGET_DIR='muse-bench/MUSE-Books_target'
 LLAMA_DIR='meta-llama/Llama-2-7b-hf'
 MAX_LEN=2048
 EPOCHS=5
-LR='1e-4'
+LR='7e-4'
 PER_DEVICE_BATCH_SIZE=2
-algos=("npo_gdr" "npo_klr" "ga_gdr" "ga_klr" "ga" "npo")
-alphas=(300 2 100 2 1 1) # last two are for ga and npo but they are just placeholders and will not be used
-LORA_CFG='{"rank": 32, "alpha": 32, "dropout": 0.1, "target_modules": null}'
+algos=("npo_gdr")
+alphas=(1) # last two are for ga and npo but they are just placeholders and will not be used
+LORA_CFG='{"rank": 32, "alpha": 32, "dropout": 0.05, "target_modules": null}'
 
 # Optional first CLI argument: model_quant_config
 # If not provided, this will be empty and the flag won't be passed to Python
