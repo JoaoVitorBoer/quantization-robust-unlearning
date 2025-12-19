@@ -98,7 +98,7 @@ def unlearn(
         lr_scheduler_type="constant",
         bf16=True,
         report_to="none",  # Disable wandb,
-        gradient_accumulation_steps=4,
+        gradient_accumulation_steps=8,
     )
 
     trainer = IterativeUnlearner(
